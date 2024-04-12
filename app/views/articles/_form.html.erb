@@ -16,9 +16,14 @@
   </div>
   
   <div>
+  <%= form.label :keyword %><br>
+  <%= form.select :keyword, Keyword.all.pluck(:word), selected: :word  %>
+  </div>
+  
+  <div>
   <%= form.label :status %><br>
   <%= form.select :status, Visible::VALID_STATUSES, selected: article.status || 'public' %>
-</div>
+  </div>
 
   <div>
     <%= form.submit %>

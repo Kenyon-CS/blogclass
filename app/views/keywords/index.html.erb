@@ -1,0 +1,15 @@
+<h1>Keywords</h1>
+
+<ul>
+  <% @keywords.each do |keyword| %>
+
+    <li>
+      <a href="<%= keyword_path(keyword) %>">
+        <%= keyword.word %>
+      </a>
+    </li>
+
+  <% end %>
+</ul>
+
+<%= link_to "New Keyword", new_keyword_path %>

@@ -1,0 +1,11 @@
+<p>Keyword: <%= @keyword.word %></p>
+
+<ul>
+  <li><%= link_to "Edit", edit_keyword_path(@keyword) %></li>
+
+  <li><%= link_to "Destroy", keyword_path(@keyword), data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+                  } %></li>
+                  
+</ul>
