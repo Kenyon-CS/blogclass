@@ -38,7 +38,7 @@ http_basic_authenticate_with name: "jps", password: "kenyon", except: [:index, :
     end
   end
   
-    def destroy
+  def destroy
     @article = Article.find(params[:id])
     @article.destroy
 
@@ -47,7 +47,7 @@ http_basic_authenticate_with name: "jps", password: "kenyon", except: [:index, :
   
   private
     def article_params
-      puts "SKON article: #{params}"
+      puts "article: #{params}"
       params.require(:article).permit(:title, :body, :status)
     end
 end
