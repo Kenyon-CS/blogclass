@@ -15,15 +15,19 @@
     <% end %>
   </div>
   
-  <div>
-  <%= form.label :keyword %><br>
-  <%= form.select :keyword, Keyword.all.pluck(:word), selected: :word  %>
-  </div>
-  
+  	<p>Select Keywords:</p>
+  	<div id="keyword_buttons"">
+	<% Keyword.all.pluck(:word).each do |keyword| %>
+	  <button type="button" class="keyword btn btn-light" value=<%= keyword =%>><%= keyword =%></button>
+	<% end %>
+  	</div>
   <div>
   <%= form.label :status %><br>
   <%= form.select :status, Visible::VALID_STATUSES, selected: article.status || 'public' %>
   </div>
+  
+  <input type="hidden" id="article_keywords" name="article[keywords]" value="">
+  	
 
   <div>
     <%= form.submit %>

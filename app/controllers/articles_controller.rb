@@ -15,13 +15,17 @@ http_basic_authenticate_with name: "jps", password: "kenyon", except: [:index, :
   end
 
   def create
+    puts("CREATE ARTICLE: #{article_params}")
     @article = Article.new(article_params)
-
+	@article_keyword = Article_keyword.new(keyword_params)
+	
     if @article.save
       redirect_to @article
     else
       render :new, status: :unprocessable_entity
     end
+    
+    
   end
 
   def edit
@@ -48,6 +52,7 @@ http_basic_authenticate_with name: "jps", password: "kenyon", except: [:index, :
   private
     def article_params
       puts "article: #{params}"
-      params.require(:article).permit(:title, :body, :status)
+      params.require(:article).permit(:title, :body, :status, :keywords)
     end
+
 end
