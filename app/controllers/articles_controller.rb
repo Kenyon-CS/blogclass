@@ -11,13 +11,25 @@ http_basic_authenticate_with name: "jps", password: "kenyon", except: [:index, :
   end
 
   def new
+    puts "SKON NEW!!!!!!"
     @article = Article.new
   end
 
   def create
-    puts("CREATE ARTICLE: #{article_params}")
-    @article = Article.new(article_params)
-	@article_keyword = Article_keyword.new(keyword_params)
+    # Separate the article from the keyword paramaters
+  	@article_args=article_params.slice(:title, :body, :status)
+  	@keywords_args=article_params.slice(:keywords)
+
+	# Create a new article
+    @article = Article.new(@article_args)
+    
+    # Get the IDs for the keywords
+    keyword_ids = string_to_array(@keywords_args[:keywords])
+    # Add an association between the article and each keyword
+	keyword_ids.each { |id|
+		@keyword = Keyword.find(id)
+		@article.keywords << @keyword
+	}
 	
     if @article.save
       redirect_to @article
@@ -34,8 +46,21 @@ http_basic_authenticate_with name: "jps", password: "kenyon", except: [:index, :
 
   def update
     @article = Article.find(params[:id])
+  	@article_args=article_params.slice(:title, :body, :status)
+    @keywords_args=article_params.slice(:keywords)
 
-    if @article.update(article_params)
+    # Get the IDs for the keywords
+    keyword_ids = string_to_array(@keywords_args[:keywords])
+    # Clear the current keyword associations
+    @article.keywords.clear
+    
+    # Add in the new keyword associations
+	keyword_ids.each { |id|
+		@keyword = Keyword.find(id)
+		@article.keywords << @keyword
+	}
+	
+    if @article.update(@article_args)
       redirect_to @article
     else
       render :edit, status: :unprocessable_entity
@@ -54,5 +79,9 @@ http_basic_authenticate_with name: "jps", password: "kenyon", except: [:index, :
       puts "article: #{params}"
       params.require(:article).permit(:title, :body, :status, :keywords)
     end
+
+    def string_to_array(string) 
+  		string.scan(/\d+/).map(&:to_i) 
+	end 
 
 end

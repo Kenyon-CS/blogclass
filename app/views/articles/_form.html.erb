@@ -1,3 +1,4 @@
+
 <%= form_with model: article do |form| %>
   <div>
     <%= form.label :title %><br>
@@ -17,8 +18,12 @@
   
   	<p>Select Keywords:</p>
   	<div id="keyword_buttons"">
-	<% Keyword.all.pluck(:word).each do |keyword| %>
-	  <button type="button" class="keyword btn btn-light" value=<%= keyword =%>><%= keyword =%></button>
+	<% Keyword.all.pluck(:word, :id).each do |keyword, keyid| %>
+	  <% if action=="edit" && Article.find(article.id).keywords.find_by(id: keyid) %>
+	    <button type="button" class="keyword btn btn-primary" value=<%= keyid =%>><%= keyword =%></button>
+	  <% else %>
+	    <button type="button" class="keyword btn btn-light" value=<%= keyid =%>><%= keyword =%></button>
+	  <% end %>
 	<% end %>
   	</div>
   <div>

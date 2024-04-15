@@ -12,6 +12,11 @@
                   
 </ul>
 
+<h2>Keywords</h2>
+<% @article.keywords.each do |k| %> 
+   <%= k.word =%>
+<%end%>
+
 <h2>Comments</h2>
 <%= render @article.comments %>
 
