@@ -79,7 +79,9 @@ http_basic_authenticate_with name: "jps", password: "kenyon", except: [:index, :
       puts "article: #{params}"
       params.require(:article).permit(:title, :body, :status, :keywords)
     end
-
+    def keyword_params
+      params.require(:articles_keywords).permit(:keywords)
+    end
     def string_to_array(string) 
   		string.scan(/\d+/).map(&:to_i) 
 	end 
