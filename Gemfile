@@ -69,3 +69,5 @@ end
 # Skon added for bootstrap
 gem "sassc-rails"
 gem "bootstrap"
+
+gem "devise", "~> 4.9"

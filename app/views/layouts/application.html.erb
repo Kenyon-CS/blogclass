@@ -36,8 +36,13 @@
 	
 			</ul>
 			<form class="">
-			  <a class="btn btn-outline-primary mr-2" href="#">Login</a>
-			  <a class="btn btn-outline-success" href="#">Become member</a>
+				<% if !user_signed_in? %>
+				  <%= link_to 'Log In', new_user_session_path, class:"btn btn-outline-success"%>
+				  <%= link_to 'Become member', new_user_registration_path, class:"btn btn-outline-success"%>
+				<% else %>
+				  <%= current_user.email %>
+				  <%= link_to 'Sign out', destroy_user_session_path, class:"btn btn-outline-success"%>
+				<% end %>
 			</form>
 	
 		  </div>

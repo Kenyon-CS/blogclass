@@ -73,4 +73,7 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
+  
+  # For devise
+  config.action_mailer.default_url_options = { host: '138.28.162.211', port: 3002 }
 end

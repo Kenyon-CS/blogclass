@@ -1,6 +1,5 @@
 class ArticlesController < ApplicationController
-
-http_basic_authenticate_with name: "jps", password: "kenyon", except: [:index, :show]
+   before_action :authenticate_user!, except: [:index, :show]
 
   def index
     @articles = Article.all
@@ -11,11 +10,11 @@ http_basic_authenticate_with name: "jps", password: "kenyon", except: [:index, :
   end
 
   def new
-    puts "SKON NEW!!!!!!"
     @article = Article.new
   end
 
   def create
+
     # Separate the article from the keyword paramaters
   	@article_args=article_params.slice(:title, :body, :status)
   	@keywords_args=article_params.slice(:keywords)
